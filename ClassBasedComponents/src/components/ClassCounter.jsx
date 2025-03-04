@@ -6,25 +6,13 @@ export default class ClassCounter extends Component {
     this.state = {
       count: 0,
     };
-    console.log("constructor");
-    // console.log(this.props);
-    this.timerID = null;
   }
-  componentDidMount() {
-    console.log("componentDidMount");
-    this.timerID = setInterval(() => {
-      console.log("mount timer");
-    }, 1000);
-  }
-  componentDidUpdate() {
-    console.log("componentDidUpdate");
-  }
-  componentWillUnmount() {
-    console.log("componentWillUnmount");
-    clearInterval(this.timerID);
-  }
+
+  // incCount() {
+  //   this.setState({ count: this.state.count + 1 });
+  // }
+
   render() {
-    console.log("render");
     const { name } = this.props;
     const { count } = this.state;
     return (
@@ -38,7 +26,10 @@ export default class ClassCounter extends Component {
         <h2 className="font-bold">{count}</h2>
         <button
           className="border rounded border-blue-600 border-solid border-x-2 border-y-2 bg-blue-300"
-          onClick={() => this.setState({ count: count + 1 })}
+          // onClick={this.incCount.bind(this)}
+          onClick={function () {
+            this.setState({ count: count + 1 });
+          }.bind(this)}
         >
           Increase
         </button>

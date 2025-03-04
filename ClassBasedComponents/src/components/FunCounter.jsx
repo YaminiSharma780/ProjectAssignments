@@ -2,14 +2,6 @@ import { useEffect, useState } from "react";
 
 export default function FunCounter() {
   const [count, setCount] = useState(0);
-  useEffect(() => {
-    const timerID = setInterval(() => {
-      console.log("useEffect timer");
-    }, 1000);
-    return () => {
-      clearInterval(timerID);
-    };
-  }, []);
 
   return (
     <div className="flex gap-6">
