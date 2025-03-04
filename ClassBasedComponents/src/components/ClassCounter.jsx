@@ -7,10 +7,9 @@ export default class ClassCounter extends Component {
       count: 0,
     };
   }
-
-  // incCount() {
-  //   this.setState({ count: this.state.count + 1 });
-  // }
+  incCount() {
+    this.setState({ count: this.state.count + 1 });
+  }
 
   render() {
     const { name } = this.props;
@@ -26,10 +25,7 @@ export default class ClassCounter extends Component {
         <h2 className="font-bold">{count}</h2>
         <button
           className="border rounded border-blue-600 border-solid border-x-2 border-y-2 bg-blue-300"
-          // onClick={this.incCount.bind(this)}
-          onClick={function () {
-            this.setState({ count: count + 1 });
-          }.bind(this)}
+          onClick={this.incCount.bind(this)}
         >
           Increase
         </button>

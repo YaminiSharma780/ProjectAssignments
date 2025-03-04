@@ -14,7 +14,10 @@ export default function Header() {
           <Link to="/classCounter">ClassCounter</Link>
         </li>
         <li>
-          <Link to="/">Option</Link>
+          <Link to="/clickCounter">ClickCounter</Link>
+        </li>
+        <li>
+          <Link to="/hoverCounter">HoverCounter</Link>
         </li>
       </ul>
     </header>
