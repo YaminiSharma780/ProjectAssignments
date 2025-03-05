@@ -1,5 +1,8 @@
 import { createStore } from "redux";
 
+const ageElement = document.querySelector(".age-element");
+const decAgeButton = document.querySelector(".dec-age");
+
 let initialState = {
   count: 0,
   company: "adobe",
@@ -37,11 +40,24 @@ function reducer(state = initialState, action) {
   }
 }
 
-let store = createStore(reducer);
-store.subscribe(() => {
+// let store = createStore(reducer, __REDUX_DEVTOOLS_EXTENSION__());
+// store enhancer connects redux to redux devtools (only if extension installed)
+// since it will give error when not installed so used window and ?. (optional chaining)
+let store = createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__?.());
+
+const unsubscribe = store.subscribe(() => {
   console.log(store.getState());
+  ageElement.innerText = store.getState().age;
 });
+
 store.dispatch({ type: AGE_INCREMENT }); // {count: 0, company: 'adobe', age: 36}
-store.dispatch({ type: AGE_DECREMENT }); // {count: 0, company: 'adobe', age: 31}
-store.dispatch({ type: AGE_INCREMENT_BY, payload: 10 }); // {count: 0, company: 'adobe', age: 41}
-store.dispatch({ type: AGE_DECREMENT_BY, payload: 5 }); // {count: 0, company: 'adobe', age: 36}
+setTimeout(() => {
+  store.dispatch({ type: AGE_DECREMENT }); // {count: 0, company: 'adobe', age: 31}
+}, 1000);
+// unsubscribe(); // after this line state will change but won't show because we have unsubscribed it
+setTimeout(() => {
+  store.dispatch({ type: AGE_INCREMENT_BY, payload: 100 }); // {count: 0, company: 'adobe', age: 136}
+}, 2000);
+decAgeButton.addEventListener("click", () => {
+  store.dispatch({ type: AGE_DECREMENT_BY, payload: 5 }); // {count: 0, company: 'adobe', age: 36}
+});
