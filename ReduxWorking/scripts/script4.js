@@ -13,6 +13,22 @@ import {
   WISHLIST_REMOVE_ITEM,
 } from "../reducers/wishlistReducer";
 
+// // Description of how combineReducers actually might be working
+// function combineReducersSelfMade(reducers) {
+//   const reducerKeys = Object.keys(reducers);
+//   return function (state = {}, action) {
+//     const nextState = {};
+//     for (let i = 0; i < reducerKeys.length; i++) {
+//       const key = reducerKeys[i];
+//       const reducer = reducers[key];
+//       const previousStateForKey = state[key];
+//       const nextStateForKey = reducer(previousStateForKey, action);
+//       nextState[key] = nextStateForKey;
+//     }
+//     return nextState;
+//   };
+// }
+
 // REDUCER
 const reducer = combineReducers({
   products: productsReducer,
