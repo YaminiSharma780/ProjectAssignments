@@ -2,14 +2,15 @@ import React from "react";
 // import { productsList } from "./store/productsList";
 import Product from "./components/Product";
 import "./App.css";
-
-import { store } from "./store/scripts/index.js";
+import { useSelector } from "react-redux";
 
 export default function App() {
-  console.log(store.getState());
+  const productsList = useSelector((state) => state.products);
+  console.log(productsList);
+
   return (
     <div className="products-container">
-      {store.getState().products.map(({ id, title, rating, price, image }) => {
+      {productsList.map(({ id, title, rating, price, image }) => {
         return (
           <Product
             key={id}
