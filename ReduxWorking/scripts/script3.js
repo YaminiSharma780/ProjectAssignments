@@ -1,5 +1,5 @@
 import { createStore } from "redux";
-import { productsList } from "./productsList";
+import { productsList } from "../productsList";
 
 let initialState = {
   products: productsList,
@@ -14,6 +14,7 @@ const CART_DEC_QUANTITY = "cart/decQuantity";
 const WISHLIST_ADD_ITEM = "wishList/addItem";
 const WISHLIST_REMOVE_ITEM = "wishList/removeItem";
 
+// REDUCER
 function reducer(state = initialState, action) {
   console.log(action.type);
   switch (action.type) {
@@ -71,8 +72,10 @@ function reducer(state = initialState, action) {
   }
 }
 
+// STORE
 let store = createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__?.());
 
+// DISPATCH
 store.dispatch({
   type: CART_ADD_ITEM,
   payload: { productID: 6, quantity: 1 },
@@ -81,39 +84,28 @@ store.dispatch({
   type: CART_ADD_ITEM,
   payload: { productID: 8, quantity: 1 },
 });
-setTimeout(() => {
-  store.dispatch({
-    type: CART_REMOVE_ITEM,
-    payload: { productID: 6 },
-  });
-}, 5000);
-
-setTimeout(() => {
-  store.dispatch({
-    type: CART_INC_QUANTITY,
-    payload: { productID: 6 },
-  });
-}, 3000);
-setTimeout(() => {
-  store.dispatch({
-    type: CART_DEC_QUANTITY,
-    payload: { productID: 6 },
-  });
-}, 4000);
-setTimeout(() => {
-  store.dispatch({
-    type: CART_DEC_QUANTITY,
-    payload: { productID: 8 },
-  });
-}, 8000);
+store.dispatch({
+  type: CART_INC_QUANTITY,
+  payload: { productID: 6 },
+});
+store.dispatch({
+  type: CART_DEC_QUANTITY,
+  payload: { productID: 6 },
+});
+store.dispatch({
+  type: CART_DEC_QUANTITY,
+  payload: { productID: 8 },
+});
+store.dispatch({
+  type: CART_REMOVE_ITEM,
+  payload: { productID: 6 },
+});
 
 store.dispatch({
   type: WISHLIST_ADD_ITEM,
   payload: { productID: 10 },
 });
-setTimeout(() => {
-  store.dispatch({
-    type: WISHLIST_REMOVE_ITEM,
-    payload: { productID: 10 },
-  });
-}, 7000);
+store.dispatch({
+  type: WISHLIST_REMOVE_ITEM,
+  payload: { productID: 10 },
+});

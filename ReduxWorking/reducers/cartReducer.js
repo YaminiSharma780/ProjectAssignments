@@ -1,0 +1,44 @@
+import { createStore } from "redux";
+
+export const CART_ADD_ITEM = "cart/addItem";
+export const CART_REMOVE_ITEM = "cart/removeItem";
+export const CART_INC_QUANTITY = "cart/incQuantity";
+export const CART_DEC_QUANTITY = "cart/decQuantity";
+
+export function cartReducer(state = [], action) {
+  console.log(action.type);
+  switch (action.type) {
+    case CART_ADD_ITEM:
+      return [...state, action.payload];
+    case CART_REMOVE_ITEM:
+      return state.filter(
+        (cartItem) => cartItem.productID != action.payload.productID
+      );
+    case CART_INC_QUANTITY:
+      return state.map((cartItem) => {
+        if (cartItem.productID === action.payload.productID) {
+          return {
+            ...cartItem,
+            quantity: cartItem.quantity + 1,
+          };
+        }
+        return cartItem;
+      });
+
+    case CART_DEC_QUANTITY:
+      return state
+        .map((cartItem) => {
+          if (cartItem.productID === action.payload.productID) {
+            return {
+              ...cartItem,
+              quantity: cartItem.quantity - 1,
+            };
+          }
+          return cartItem;
+        })
+        .filter((cartItem) => cartItem.quantity > 0);
+
+    default:
+      return state;
+  }
+}
