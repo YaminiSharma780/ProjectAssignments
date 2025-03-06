@@ -6,6 +6,32 @@ export const CART_REMOVE_ITEM = "cart/removeItem";
 export const CART_INC_QUANTITY = "cart/incQuantity";
 export const CART_DEC_QUANTITY = "cart/decQuantity";
 
+// Action Creator
+export function cartAddItem(productID, quantity = 1) {
+  return {
+    type: CART_ADD_ITEM,
+    payload: { productID, quantity },
+  };
+}
+export function cartRemoveItem(productID) {
+  return {
+    type: CART_REMOVE_ITEM,
+    payload: { productID },
+  };
+}
+export function cartIncreaseQuantity(productID) {
+  return {
+    type: CART_INC_QUANTITY,
+    payload: { productID },
+  };
+}
+export function cartDecreaseQuantity(productID) {
+  return {
+    type: CART_DEC_QUANTITY,
+    payload: { productID },
+  };
+}
+
 // Reducer
 export function cartReducer(state = [], action) {
   console.log(action.type);

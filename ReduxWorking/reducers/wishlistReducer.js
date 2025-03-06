@@ -4,6 +4,20 @@ import { createStore } from "redux";
 export const WISHLIST_ADD_ITEM = "wishList/addItem";
 export const WISHLIST_REMOVE_ITEM = "wishList/removeItem";
 
+// Action Creator
+export function wishListAddItem(productID) {
+  return {
+    type: WISHLIST_ADD_ITEM,
+    payload: { productID },
+  };
+}
+export function wishListRemoveItem(productID) {
+  return {
+    type: WISHLIST_REMOVE_ITEM,
+    payload: { productID },
+  };
+}
+
 // Reducer
 export function wishListReducer(state = [], action) {
   console.log(action.type);
