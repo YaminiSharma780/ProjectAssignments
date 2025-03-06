@@ -1,5 +1,7 @@
 import { createStore } from "redux";
 
+// DUCKS Pattern : https://github.com/erikras/ducks-modular-redux
+
 // Action Types
 export const CART_ADD_ITEM = "cart/addItem";
 export const CART_REMOVE_ITEM = "cart/removeItem";

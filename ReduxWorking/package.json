@@ -11,6 +11,11 @@
   "type": "commonjs",
   "description": "",
   "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "redux": "^5.0.1"
+  },
+  "devDependencies": {
+    "process": "^0.11.10"
   }
 }

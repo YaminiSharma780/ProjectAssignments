@@ -1,5 +1,7 @@
 import { createStore } from "redux";
 
+// DUCKS Pattern : https://github.com/erikras/ducks-modular-redux
+
 // Action Types
 export const WISHLIST_ADD_ITEM = "wishList/addItem";
 export const WISHLIST_REMOVE_ITEM = "wishList/removeItem";
