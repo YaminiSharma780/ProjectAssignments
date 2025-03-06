@@ -1,8 +1,10 @@
 import { createStore } from "redux";
 
+// Action Types
 export const WISHLIST_ADD_ITEM = "wishList/addItem";
 export const WISHLIST_REMOVE_ITEM = "wishList/removeItem";
 
+// Reducer
 export function wishListReducer(state = [], action) {
   console.log(action.type);
   switch (action.type) {

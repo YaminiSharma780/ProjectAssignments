@@ -1,10 +1,12 @@
 import { createStore } from "redux";
 
+// Action Types
 export const CART_ADD_ITEM = "cart/addItem";
 export const CART_REMOVE_ITEM = "cart/removeItem";
 export const CART_INC_QUANTITY = "cart/incQuantity";
 export const CART_DEC_QUANTITY = "cart/decQuantity";
 
+// Reducer
 export function cartReducer(state = [], action) {
   console.log(action.type);
   switch (action.type) {

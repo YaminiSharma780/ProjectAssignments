@@ -13,22 +13,6 @@ import {
   WISHLIST_REMOVE_ITEM,
 } from "../reducers/wishlistReducer";
 
-// // Description of how combineReducers actually might be working
-// function combineReducersSelfMade(reducers) {
-//   const reducerKeys = Object.keys(reducers);
-//   return function (state = {}, action) {
-//     const nextState = {};
-//     for (let i = 0; i < reducerKeys.length; i++) {
-//       const key = reducerKeys[i];
-//       const reducer = reducers[key];
-//       const previousStateForKey = state[key];
-//       const nextStateForKey = reducer(previousStateForKey, action);
-//       nextState[key] = nextStateForKey;
-//     }
-//     return nextState;
-//   };
-// }
-
 // REDUCER
 const reducer = combineReducers({
   products: productsReducer,
@@ -40,36 +24,20 @@ const reducer = combineReducers({
 let store = createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__?.());
 
 // DISPATCH
-store.dispatch({
-  type: CART_ADD_ITEM,
-  payload: { productID: 6, quantity: 1 },
-});
-store.dispatch({
-  type: CART_ADD_ITEM,
-  payload: { productID: 8, quantity: 1 },
-});
-store.dispatch({
-  type: CART_INC_QUANTITY,
-  payload: { productID: 6 },
-});
-store.dispatch({
-  type: CART_DEC_QUANTITY,
-  payload: { productID: 6 },
-});
-store.dispatch({
-  type: CART_REMOVE_ITEM,
-  payload: { productID: 6 },
-});
-store.dispatch({
-  type: CART_DEC_QUANTITY,
-  payload: { productID: 8 },
-});
 
-store.dispatch({
-  type: WISHLIST_ADD_ITEM,
-  payload: { productID: 10 },
-});
-store.dispatch({
-  type: WISHLIST_REMOVE_ITEM,
-  payload: { productID: 10 },
-});
+function dispatchFun(type, payload) {
+  store.dispatch({
+    type: type,
+    payload: payload,
+  });
+}
+dispatchFun(CART_ADD_ITEM, { productID: 13, quantity: 2 });
+dispatchFun(CART_ADD_ITEM, { productID: 6, quantity: 1 });
+dispatchFun(CART_ADD_ITEM, { productID: 8, quantity: 1 });
+dispatchFun(CART_INC_QUANTITY, { productID: 6 });
+dispatchFun(CART_DEC_QUANTITY, { productID: 6 });
+dispatchFun(CART_REMOVE_ITEM, { productID: 6 });
+dispatchFun(CART_DEC_QUANTITY, { productID: 8 });
+dispatchFun(WISHLIST_ADD_ITEM, { productID: 10 });
+dispatchFun(WISHLIST_ADD_ITEM, { productID: 15 });
+dispatchFun(WISHLIST_REMOVE_ITEM, { productID: 10 });
