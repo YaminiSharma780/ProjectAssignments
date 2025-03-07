@@ -10,7 +10,9 @@ export default function Product({ productId, title, rating, price, imageUrl }) {
       <div>
         <button
           onClick={() => {
-            dispatch(wishListAddItem(productId));
+            dispatch(
+              wishListAddItem({ productId, title, rating, price, imageUrl })
+            );
           }}
           className="wish-button"
         >
@@ -32,7 +34,9 @@ export default function Product({ productId, title, rating, price, imageUrl }) {
       <div className="cta-container">
         <button
           onClick={() => {
-            dispatch(cartAddItem(productId));
+            dispatch(
+              cartAddItem({ productId, title, rating, price, imageUrl })
+            );
           }}
         >
           Add to Cart

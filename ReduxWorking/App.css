@@ -224,7 +224,7 @@ form button {
     padding: 12px 24px;
     display: grid;
     gap: 16px;
-    grid-template-columns: 4fr 1fr 1fr 1fr;
+    grid-template-columns: 4fr 1fr;
 }
 
 .wish-list-item-container>div:not(.wish-list-item) {

@@ -9,10 +9,10 @@ export const CART_INC_QUANTITY = "cart/incQuantity";
 export const CART_DEC_QUANTITY = "cart/decQuantity";
 
 // Action Creator
-export function cartAddItem(productID, quantity = 1) {
+export function cartAddItem(productData) {
   return {
     type: CART_ADD_ITEM,
-    payload: { productID, quantity },
+    payload: productData,
   };
 }
 export function cartRemoveItem(productID) {
@@ -39,20 +39,20 @@ export function cartReducer(state = [], action) {
   console.log(action.type);
 
   const foundElement = state.find(
-    (element) => element.productID === action.payload.productID
+    (cartItem) => cartItem.productId === action.payload.productId
   );
 
   switch (action.type) {
     case CART_ADD_ITEM:
       if (foundElement) {
         return state.map((cartItem) => {
-          if (cartItem.productID === foundElement.productID) {
+          if (cartItem.productId === foundElement.productId) {
             return { ...cartItem, quantity: cartItem.quantity + 1 };
           }
           return cartItem;
         });
       }
-      return [...state, action.payload];
+      return [...state, { ...action.payload, quantity: 1 }];
     case CART_REMOVE_ITEM:
       return state.filter(
         (cartItem) => cartItem.productID != action.payload.productID
