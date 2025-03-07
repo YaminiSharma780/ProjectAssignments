@@ -37,8 +37,21 @@ export function cartDecreaseQuantity(productID) {
 // Reducer
 export function cartReducer(state = [], action) {
   console.log(action.type);
+
+  const foundElement = state.find(
+    (element) => element.productID === action.payload.productID
+  );
+
   switch (action.type) {
     case CART_ADD_ITEM:
+      if (foundElement) {
+        return state.map((cartItem) => {
+          if (cartItem.productID === foundElement.productID) {
+            return { ...cartItem, quantity: cartItem.quantity + 1 };
+          }
+          return cartItem;
+        });
+      }
       return [...state, action.payload];
     case CART_REMOVE_ITEM:
       return state.filter(

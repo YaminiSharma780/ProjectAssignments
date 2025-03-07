@@ -270,3 +270,11 @@ form button {
     left: 41%;
     transform: translate(-40%, -90%);
 }
+
+.wish-button {
+    cursor: pointer;
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    border: 1px solid black;
+}

@@ -22,9 +22,16 @@ export function wishListRemoveItem(productID) {
 
 // Reducer
 export function wishListReducer(state = [], action) {
-  console.log(action.type);
+  if (!action.payload || !action.payload.productID) {
+    return state;
+  }
+  const foundElement = state.includes(action.payload.productID);
+
   switch (action.type) {
     case WISHLIST_ADD_ITEM:
+      if (foundElement) {
+        return state;
+      }
       return [...state, action.payload.productID];
     case WISHLIST_REMOVE_ITEM:
       return state.filter(
