@@ -1,0 +1,30 @@
+import React from "react";
+import { Link } from "react-router-dom";
+import cartIcon from "../assets/cart-icon.svg";
+import wishListIcon from "../assets/wish-list-icon.svg";
+
+export default function Header() {
+  return (
+    <header>
+      <div className="header-contents">
+        <h2>
+          <Link to="/">Shopzee</Link>
+        </h2>
+        <div className="header-contents-routes">
+          <Link className="wish-list-link" to="/wishList">
+            <img
+              className="wish-list-icon"
+              src={wishListIcon}
+              alt="wish-icon"
+            />
+            <div className="wish-list-items-count">0</div>
+          </Link>
+          <Link className="cart-link" to="/cart">
+            <img className="cart-icon" src={cartIcon} alt="cart-icon" />
+            <div className="cart-items-count">0</div>
+          </Link>
+        </div>
+      </div>
+    </header>
+  );
+}

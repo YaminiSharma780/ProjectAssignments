@@ -21,6 +21,6 @@ const reducer = combineReducers({
 });
 
 // STORE
-export let store = createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__?.());
+export const store = createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__?.());
 
 // DISPATCH
