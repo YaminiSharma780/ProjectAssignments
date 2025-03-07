@@ -21,23 +21,26 @@ export default function Cart() {
           <div className="quantity">Quantity</div>
           <div className="total">Total</div>
         </div>
-        {cartItems.map(({ id, title, rating, price, imageUrl, quantity }) => {
-          return (
-            <CartItem
-              key={id}
-              title={title}
-              price={price}
-              quantity={quantity}
-              imageUrl={imageUrl}
-              rating={rating}
-            />
-          );
-        })}
+        {cartItems.map(
+          ({ productId, title, rating, price, imageUrl, quantity }) => {
+            return (
+              <CartItem
+                key={productId}
+                productId={productId}
+                title={title}
+                price={price}
+                quantity={quantity}
+                imageUrl={imageUrl}
+                rating={rating}
+              />
+            );
+          }
+        )}
         <div className="cart-header cart-item-container">
           <div></div>
           <div></div>
           <div></div>
-          <div className="total">${totalPrice}</div>
+          <div className="total">${totalPrice.toFixed(2)}</div>
         </div>
       </div>
     </div>

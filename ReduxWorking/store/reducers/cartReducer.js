@@ -15,22 +15,22 @@ export function cartAddItem(productData) {
     payload: productData,
   };
 }
-export function cartRemoveItem(productID) {
+export function cartRemoveItem(productId) {
   return {
     type: CART_REMOVE_ITEM,
-    payload: { productID },
+    payload: { productId },
   };
 }
-export function cartIncreaseQuantity(productID) {
+export function cartIncreaseQuantity(productId) {
   return {
     type: CART_INC_QUANTITY,
-    payload: { productID },
+    payload: { productId },
   };
 }
-export function cartDecreaseQuantity(productID) {
+export function cartDecreaseQuantity(productId) {
   return {
     type: CART_DEC_QUANTITY,
-    payload: { productID },
+    payload: { productId },
   };
 }
 
@@ -55,11 +55,11 @@ export function cartReducer(state = [], action) {
       return [...state, { ...action.payload, quantity: 1 }];
     case CART_REMOVE_ITEM:
       return state.filter(
-        (cartItem) => cartItem.productID != action.payload.productID
+        (cartItem) => cartItem.productId != action.payload.productId
       );
     case CART_INC_QUANTITY:
       return state.map((cartItem) => {
-        if (cartItem.productID === action.payload.productID) {
+        if (cartItem.productId === action.payload.productId) {
           return {
             ...cartItem,
             quantity: cartItem.quantity + 1,
@@ -71,7 +71,7 @@ export function cartReducer(state = [], action) {
     case CART_DEC_QUANTITY:
       return state
         .map((cartItem) => {
-          if (cartItem.productID === action.payload.productID) {
+          if (cartItem.productId === action.payload.productId) {
             return {
               ...cartItem,
               quantity: cartItem.quantity - 1,

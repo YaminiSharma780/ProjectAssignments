@@ -1,6 +1,21 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import {
+  cartDecreaseQuantity,
+  cartIncreaseQuantity,
+} from "../store/reducers/cartReducer";
 
-export default function CartItem({ title, rating, price, imageUrl, quantity }) {
+export default function CartItem({
+  productId,
+  title,
+  rating,
+  price,
+  imageUrl,
+  quantity,
+}) {
+  const dispatch = useDispatch();
+  console.log(productId, title, rating, price, imageUrl, quantity);
+
   return (
     <div className="cart-item-container">
       <div className="cart-item">
@@ -10,13 +25,17 @@ export default function CartItem({ title, rating, price, imageUrl, quantity }) {
           <p>{rating} ★ ★ ★ ★</p>
         </div>
       </div>
-      <div className="item-price">${price}</div>
+      <div className="item-price">${price.toFixed(2)}</div>
       <div className="item-quantity">
-        <button>-</button>
+        <button onClick={() => dispatch(cartDecreaseQuantity(productId))}>
+          -
+        </button>
         <span>{quantity}</span>
-        <button>+</button>
+        <button onClick={() => dispatch(cartIncreaseQuantity(productId))}>
+          +
+        </button>
       </div>
-      <div className="item-total">${quantity * price}</div>
+      <div className="item-total">${(quantity * price).toFixed(2)}</div>
     </div>
   );
 }

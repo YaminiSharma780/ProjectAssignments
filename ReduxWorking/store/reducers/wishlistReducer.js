@@ -13,10 +13,10 @@ export function wishListAddItem(productData) {
     payload: productData,
   };
 }
-export function wishListRemoveItem(productID) {
+export function wishListRemoveItem(productId) {
   return {
     type: WISHLIST_REMOVE_ITEM,
-    payload: { productID },
+    payload: { productId },
   };
 }
 
@@ -35,8 +35,11 @@ export function wishListReducer(state = [], action) {
       }
       return [...state, { ...action.payload }];
     case WISHLIST_REMOVE_ITEM:
+      // return state.filter(
+      //   (wishListItem) => wishListItem !== action.payload.productId
+      // );
       return state.filter(
-        (wishListItem) => wishListItem !== action.payload.productID
+        (wishListItem) => wishListItem.productId !== action.payload.productId
       );
     default:
       return state;
