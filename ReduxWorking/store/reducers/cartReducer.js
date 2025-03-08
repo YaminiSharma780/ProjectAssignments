@@ -1,3 +1,4 @@
+import { produce } from "immer";
 import { createStore } from "redux";
 
 // DUCKS Pattern : https://github.com/erikras/ducks-modular-redux
@@ -35,53 +36,34 @@ export function cartDecreaseQuantity(productId) {
 }
 
 // Reducer
-export function cartReducer(state = [], action) {
-  console.log(action.type);
+export function cartReducer(initialState = [], action) {
+  return produce(initialState, (state) => {
+    // findIndex() returns -1 when element is not found
+    const foundElementIndex = state.findIndex(
+      (cartItem) => cartItem.productId === action.payload.productId
+    );
 
-  const foundElement = state.find(
-    (cartItem) => cartItem.productId === action.payload.productId
-  );
-
-  switch (action.type) {
-    case CART_ADD_ITEM:
-      if (foundElement) {
-        return state.map((cartItem) => {
-          if (cartItem.productId === foundElement.productId) {
-            return { ...cartItem, quantity: cartItem.quantity + 1 };
-          }
-          return cartItem;
-        });
-      }
-      return [...state, { ...action.payload, quantity: 1 }];
-    case CART_REMOVE_ITEM:
-      return state.filter(
-        (cartItem) => cartItem.productId != action.payload.productId
-      );
-    case CART_INC_QUANTITY:
-      return state.map((cartItem) => {
-        if (cartItem.productId === action.payload.productId) {
-          return {
-            ...cartItem,
-            quantity: cartItem.quantity + 1,
-          };
+    switch (action.type) {
+      case CART_ADD_ITEM:
+        if (foundElementIndex !== -1) {
+          state[foundElementIndex].quantity += 1;
+          break;
         }
-        return cartItem;
-      });
-
-    case CART_DEC_QUANTITY:
-      return state
-        .map((cartItem) => {
-          if (cartItem.productId === action.payload.productId) {
-            return {
-              ...cartItem,
-              quantity: cartItem.quantity - 1,
-            };
-          }
-          return cartItem;
-        })
-        .filter((cartItem) => cartItem.quantity > 0);
-
-    default:
-      return state;
-  }
+        state.push({ ...action.payload, quantity: 1 });
+        break;
+      case CART_REMOVE_ITEM:
+        state.splice(foundElementIndex, 1);
+        break;
+      case CART_INC_QUANTITY:
+        state[foundElementIndex].quantity += 1;
+        break;
+      case CART_DEC_QUANTITY:
+        state[foundElementIndex].quantity -= 1;
+        if (state[foundElementIndex].quantity === 0) {
+          state.splice(foundElementIndex, 1);
+        }
+        break;
+    }
+    return state;
+  });
 }

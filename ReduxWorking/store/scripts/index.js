@@ -1,17 +1,7 @@
 import { combineReducers, createStore } from "redux";
 import productsReducer from "../reducers/productsReducer";
-import {
-  cartAddItem,
-  cartDecreaseQuantity,
-  cartIncreaseQuantity,
-  cartReducer,
-  cartRemoveItem,
-} from "../reducers/cartReducer";
-import {
-  wishListReducer,
-  wishListAddItem,
-  wishListRemoveItem,
-} from "../reducers/wishlistReducer";
+import { cartReducer } from "../reducers/cartReducer";
+import { wishListReducer } from "../reducers/wishlistReducer";
 
 // REDUCER
 const reducer = combineReducers({
@@ -21,6 +11,7 @@ const reducer = combineReducers({
 });
 
 // STORE
-export const store = createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__?.());
-
-// DISPATCH
+export const store = createStore(
+  reducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__?.()
+);

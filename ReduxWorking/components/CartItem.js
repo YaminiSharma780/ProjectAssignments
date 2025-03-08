@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import {
   cartDecreaseQuantity,
   cartIncreaseQuantity,
+  cartRemoveItem,
 } from "../store/reducers/cartReducer";
 
 export default function CartItem({
@@ -23,6 +24,9 @@ export default function CartItem({
         <div>
           <h3>{title}</h3>
           <p>{rating} ★ ★ ★ ★</p>
+          <button onClick={() => dispatch(cartRemoveItem(productId))}>
+            Delete
+          </button>
         </div>
       </div>
       <div className="item-price">${price.toFixed(2)}</div>

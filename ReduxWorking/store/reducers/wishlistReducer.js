@@ -1,3 +1,4 @@
+import { produce } from "immer";
 import { createStore } from "redux";
 
 // DUCKS Pattern : https://github.com/erikras/ducks-modular-redux
@@ -21,27 +22,47 @@ export function wishListRemoveItem(productId) {
 }
 
 // Reducer
-export function wishListReducer(state = [], action) {
-  console.log(action.type);
 
-  const foundElement = state.find(
-    (cartItem) => cartItem.productId === action.payload.productId
-  );
+export function wishListReducer(initialState = [], action) {
+  return produce(initialState, (state) => {
+    // findIndex() returns -1 when element is not found
+    const foundElementIndex = state.findIndex(
+      (wishListItem) => wishListItem.productId === action.payload.productId
+    );
 
-  switch (action.type) {
-    case WISHLIST_ADD_ITEM:
-      if (foundElement) {
-        return state;
-      }
-      return [...state, { ...action.payload }];
-    case WISHLIST_REMOVE_ITEM:
-      // return state.filter(
-      //   (wishListItem) => wishListItem !== action.payload.productId
-      // );
-      return state.filter(
-        (wishListItem) => wishListItem.productId !== action.payload.productId
-      );
-    default:
-      return state;
-  }
+    switch (action.type) {
+      case WISHLIST_ADD_ITEM:
+        if (foundElementIndex !== -1) {
+          break;
+        }
+        state.push({ ...action.payload });
+        break;
+      case WISHLIST_REMOVE_ITEM:
+        state.splice(foundElementIndex, 1);
+        break;
+    }
+    return state;
+  });
 }
+
+// export function wishListReducer(state = [], action) {
+//   console.log(action.type);
+
+//   const foundElement = state.find(
+//     (wishListItem) => wishListItem.productId === action.payload.productId
+//   );
+
+//   switch (action.type) {
+//     case WISHLIST_ADD_ITEM:
+//       if (foundElement) {
+//         return state;
+//       }
+//       return [...state, { ...action.payload }];
+//     case WISHLIST_REMOVE_ITEM:
+//       return state.filter(
+//         (wishListItem) => wishListItem.productId !== action.payload.productId
+//       );
+//     default:
+//       return state;
+//   }
+// }
