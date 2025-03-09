@@ -3,16 +3,24 @@ import { Link } from "react-router-dom";
 import cartIcon from "../assets/cart-icon.svg";
 import wishListIcon from "../assets/wish-list-icon.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { updateAllProducts } from "../store/reducers/productsSlice";
+import {
+  updateAllProducts,
+  updateLoader,
+  updateError,
+} from "../store/reducers/productsSlice";
 
 export default function Header() {
-  const dispatch = useDispatch(
-    useEffect(() => {
-      fetch("https://fakestoreapi.com/products")
-        .then((res) => res.json())
-        .then((productsList) => dispatch(updateAllProducts(productsList)));
-    }, [])
-  );
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(updateLoader());
+
+    fetch("https://fakestoreapi.com/products")
+      .then((res) => res.json())
+      .then((productsList) => dispatch(updateAllProducts(productsList)))
+      .catch(() => dispatch(updateError()));
+  }, []);
+
   const cartItems = useSelector((state) => state.cartItems);
   const wishListItems = useSelector((state) => state.wishList);
 
