@@ -8,21 +8,42 @@ import {
   updateLoader,
   updateError,
 } from "../store/reducers/productsSlice";
+import {
+  loadCartItems,
+  updateCartError,
+  updateCartLoader,
+} from "../store/reducers/cartSlice";
+import {
+  loadWishListItems,
+  updateWishListLoader,
+  updateWishListError,
+} from "../store/reducers/wishlistSlice";
 
 export default function Header() {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(updateLoader());
-
     fetch("https://fakestoreapi.com/products")
       .then((res) => res.json())
       .then((productsList) => dispatch(updateAllProducts(productsList)))
       .catch(() => dispatch(updateError()));
+
+    dispatch(updateCartLoader());
+    fetch("https://fakestoreapi.com/carts/5")
+      .then((res) => res.json())
+      .then((cartList) => dispatch(loadCartItems(cartList)))
+      .catch(() => dispatch(updateCartError()));
+
+    dispatch(updateWishListLoader());
+    fetch("https://fakestoreapi.com/carts/5")
+      .then((res) => res.json())
+      .then((wishList) => dispatch(loadWishListItems(wishList)))
+      .catch(() => dispatch(updateWishListError()));
   }, []);
 
-  const cartItems = useSelector((state) => state.cartItems);
-  const wishListItems = useSelector((state) => state.wishList);
+  const cartItems = useSelector((state) => state.cartItems.list);
+  const wishListItems = useSelector((state) => state.wishList.list);
 
   return (
     <header>
@@ -37,7 +58,9 @@ export default function Header() {
               src={wishListIcon}
               alt="wish-icon"
             />
-            <div className="wish-list-items-count">{wishListItems.length}</div>
+            <div className="wish-list-items-count">
+              {wishListItems.reduce((total) => total + 1, 0)}
+            </div>
           </Link>
           <Link className="cart-link" to="/cart">
             <img className="cart-icon" src={cartIcon} alt="cart-icon" />

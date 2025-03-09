@@ -13,12 +13,11 @@ const slice = createSlice({
     },
     updateError(state, action) {
       state.loading = false;
-      state.error =
-        action.payload || "Something went wrong..";
+      state.error = action.payload || "Something went wrong..";
     },
     updateAllProducts(state, action) {
       state.loading = false;
-      state.error = false;
+      state.error = "";
       state.list = action.payload;
     },
   },

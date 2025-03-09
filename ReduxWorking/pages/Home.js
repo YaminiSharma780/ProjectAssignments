@@ -8,6 +8,7 @@ export default function Home() {
   const productsList = useSelector((state) => state.products.list);
   const isLoading = useSelector((state) => state.products.loading);
   const isError = useSelector((state) => state.products.error);
+  console.log(isLoading, isError);
 
   return isLoading === true ? (
     <Loader />
@@ -20,7 +21,7 @@ export default function Home() {
           key={id}
           productId={id}
           title={title}
-          rating={rating.rate}
+          rating={rating}
           price={price}
           imageUrl={image}
         />

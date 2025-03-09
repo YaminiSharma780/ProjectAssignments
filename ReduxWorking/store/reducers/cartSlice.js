@@ -7,30 +7,46 @@ const searchElement = (state, action) =>
     (cartItem) => cartItem.productId === action.payload.productId
   );
 const slice = createSlice({
-  name: "cart",
-  initialState: [],
+  name: "cartItems",
+  initialState: {
+    loading: false,
+    list: [],
+    error: "",
+  },
   reducers: {
+    updateCartLoader(state) {
+      state.loading = true;
+    },
+    updateCartError(state, action) {
+      state.loading = false;
+      state.error = action.payload || "Something went wrong..";
+    },
+    loadCartItems(state, action) {
+      state.loading = false;
+      state.error = "";
+      state.list = action.payload.products;
+    },
     cartAddItem(state, action) {
-      const foundElementIndex = searchElement(state, action);
+      const foundElementIndex = searchElement(state.list, action);
       if (foundElementIndex !== -1) {
-        state[foundElementIndex].quantity += 1;
+        state.list[foundElementIndex].quantity += 1;
       } else {
-        state.push({ ...action.payload, quantity: 1 });
+        state.list.push({ ...action.payload, quantity: 1 });
       }
     },
     cartRemoveItem(state, action) {
-      const foundElementIndex = searchElement(state, action);
-      state.splice(foundElementIndex, 1);
+      const foundElementIndex = searchElement(state.list, action);
+      state.list.splice(foundElementIndex, 1);
     },
     cartIncreaseQuantity(state, action) {
-      const foundElementIndex = searchElement(state, action);
-      state[foundElementIndex].quantity += 1;
+      const foundElementIndex = searchElement(state.list, action);
+      state.list[foundElementIndex].quantity += 1;
     },
     cartDecreaseQuantity(state, action) {
-      const foundElementIndex = searchElement(state, action);
-      state[foundElementIndex].quantity -= 1;
-      if (state[foundElementIndex].quantity === 0) {
-        state.splice(foundElementIndex, 1);
+      const foundElementIndex = searchElement(state.list, action);
+      state.list[foundElementIndex].quantity -= 1;
+      if (state.list[foundElementIndex].quantity === 0) {
+        state.list.splice(foundElementIndex, 1);
       }
     },
   },
@@ -38,9 +54,12 @@ const slice = createSlice({
 // console.dir(slice.reducer);
 // console.dir(slice.actions);
 export const {
+  loadCartItems,
   cartAddItem,
   cartRemoveItem,
   cartIncreaseQuantity,
   cartDecreaseQuantity,
+  updateCartLoader,
+  updateCartError,
 } = slice.actions;
 export const cartReducer = slice.reducer;
