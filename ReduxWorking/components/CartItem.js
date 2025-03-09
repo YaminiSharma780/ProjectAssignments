@@ -4,7 +4,7 @@ import {
   cartDecreaseQuantity,
   cartIncreaseQuantity,
   cartRemoveItem,
-} from "../store/reducers/cartReducer";
+} from "../store/reducers/cartSlice";
 
 export default function CartItem({
   productId,

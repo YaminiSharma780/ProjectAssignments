@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { productsReducer } from "../reducers/productsReducer";
-import { cartReducer } from "../reducers/cartReducer";
-import { wishListReducer } from "../reducers/wishlistReducer";
+import { productsReducer } from "../reducers/productsSlice";
+import { cartReducer } from "../reducers/cartSlice";
+import { wishListReducer } from "../reducers/wishlistSlice";
 import { logger } from "../middleware/logger";
 
 export const store = configureStore({

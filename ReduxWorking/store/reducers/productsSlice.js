@@ -9,7 +9,7 @@ const slice = createSlice({
     },
   },
 });
-console.dir(slice.reducer);
-console.dir(slice.actions);
+// console.dir(slice.reducer);
+// console.dir(slice.actions);
 export const { updateAllProducts } = slice.actions;
 export const productsReducer = slice.reducer;

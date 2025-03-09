@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import cartIcon from "../assets/cart-icon.svg";
 import wishListIcon from "../assets/wish-list-icon.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { updateAllProducts } from "../store/reducers/productsReducer";
+import { updateAllProducts } from "../store/reducers/productsSlice";
 
 export default function Header() {
   const dispatch = useDispatch(
