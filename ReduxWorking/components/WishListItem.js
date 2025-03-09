@@ -11,7 +11,7 @@ export default function WishListItem({
   quantity,
 }) {
   const dispatch = useDispatch();
-  console.log(productId, title, rating, price, imageUrl, quantity);
+  // console.log(productId, title, rating, price, imageUrl, quantity);
 
   return (
     <div className="wish-list-item-container">

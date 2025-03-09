@@ -22,7 +22,6 @@ export function wishListRemoveItem(productId) {
 }
 
 // Reducer
-
 export function wishListReducer(initialState = [], action) {
   return produce(initialState, (state) => {
     // findIndex() returns -1 when element is not found

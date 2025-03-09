@@ -15,7 +15,7 @@ export default function CartItem({
   quantity,
 }) {
   const dispatch = useDispatch();
-  console.log(productId, title, rating, price, imageUrl, quantity);
+  // console.log(productId, title, rating, price, imageUrl, quantity);
 
   return (
     <div className="cart-item-container">
@@ -24,18 +24,18 @@ export default function CartItem({
         <div>
           <h3>{title}</h3>
           <p>{rating} ★ ★ ★ ★</p>
-          <button onClick={() => dispatch(cartRemoveItem(productId))}>
+          <button onClick={() => dispatch(cartRemoveItem({ productId }))}>
             Delete
           </button>
         </div>
       </div>
       <div className="item-price">${price.toFixed(2)}</div>
       <div className="item-quantity">
-        <button onClick={() => dispatch(cartDecreaseQuantity(productId))}>
+        <button onClick={() => dispatch(cartDecreaseQuantity({ productId }))}>
           -
         </button>
         <span>{quantity}</span>
-        <button onClick={() => dispatch(cartIncreaseQuantity(productId))}>
+        <button onClick={() => dispatch(cartIncreaseQuantity({ productId }))}>
           +
         </button>
       </div>

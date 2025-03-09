@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 
 export default function WishList() {
   const wishListItems = useSelector((state) => state.wishList);
-  console.log(wishListItems);
+  // console.log(wishListItems);
 
   return (
     <div className="wish-list-container">
