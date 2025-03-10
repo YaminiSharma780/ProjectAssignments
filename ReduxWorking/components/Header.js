@@ -23,23 +23,35 @@ export default function Header() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(updateLoader());
-    fetch("https://fakestoreapi.com/products")
-      .then((res) => res.json())
-      .then((productsList) => dispatch(updateAllProducts(productsList)))
-      .catch(() => dispatch(updateError()));
+    dispatch({
+      type: "api/makeCall",
+      payload: {
+        url: "products",
+        onStart: updateLoader.type,
+        onSuccess: updateAllProducts.type,
+        onFailure: updateError.type,
+      },
+    });
 
-    dispatch(updateCartLoader());
-    fetch("https://fakestoreapi.com/carts/5")
-      .then((res) => res.json())
-      .then((cartList) => dispatch(loadCartItems(cartList)))
-      .catch(() => dispatch(updateCartError()));
+    dispatch({
+      type: "api/makeCall",
+      payload: {
+        url: "carts/5",
+        onStart: updateCartLoader.type,
+        onSuccess: loadCartItems.type,
+        onFailure: updateCartError.type,
+      },
+    });
 
-    dispatch(updateWishListLoader());
-    fetch("https://fakestoreapi.com/carts/5")
-      .then((res) => res.json())
-      .then((wishList) => dispatch(loadWishListItems(wishList)))
-      .catch(() => dispatch(updateWishListError()));
+    dispatch({
+      type: "api/makeCall",
+      payload: {
+        url: "carts/5",
+        onStart: updateWishListLoader.type,
+        onSuccess: loadWishListItems.type,
+        onFailure: updateWishListError.type,
+      },
+    });
   }, []);
 
   const cartItems = useSelector((state) => state.cartItems.list);
