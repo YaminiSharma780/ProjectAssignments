@@ -25,5 +25,19 @@ const slice = createSlice({
 export const selectorGetAllProductsState = (state) => state.products.list;
 export const selectorGetIsLoadingState = (state) => state.products.loading;
 export const selectorGetIsErrorState = (state) => state.products.error;
-export const { updateAllProducts, updateLoader, updateError } = slice.actions;
+
+const { updateAllProducts, updateLoader, updateError } = slice.actions;
+
+export const thunkGetAllProducts = (dispatch) => {
+  dispatch(updateLoader());
+  fetch(`https://fakestoreapi.com/products`)
+    .then((res) => res.json())
+    .then((products) => {
+      dispatch(updateAllProducts(products));
+    })
+    .catch(() => {
+      dispatch(updateError());
+    });
+};
+
 export const productsReducer = slice.reducer;

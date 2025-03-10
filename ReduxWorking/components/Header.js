@@ -3,53 +3,18 @@ import { Link } from "react-router-dom";
 import cartIcon from "../assets/cart-icon.svg";
 import wishListIcon from "../assets/wish-list-icon.svg";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  updateAllProducts,
-  updateLoader,
-  updateError,
-} from "../store/reducers/productsSlice";
-import {
-  loadCartItems,
-  updateCartError,
-  updateCartLoader,
-} from "../store/reducers/cartSlice";
-import {
-  loadWishListItems,
-  updateWishListLoader,
-  updateWishListError,
-} from "../store/reducers/wishlistSlice";
+import { thunkGetAllProducts } from "../store/reducers/productsSlice";
+import { thunkGetAllCartItems } from "../store/reducers/cartSlice";
+import { thunkGetAllWishListItems } from "../store/reducers/wishlistSlice";
 import { fetchData } from "../store/middleware/apiMiddleware";
 
 export default function Header() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(
-      fetchData({
-        url: "products",
-        onStart: updateLoader.type,
-        onSuccess: updateAllProducts.type,
-        onFailure: updateError.type,
-      })
-    );
-
-    dispatch(
-      fetchData({
-        url: "carts/5",
-        onStart: updateCartLoader.type,
-        onSuccess: loadCartItems.type,
-        onFailure: updateCartError.type,
-      })
-    );
-
-    dispatch(
-      fetchData({
-        url: "carts/5",
-        onStart: updateWishListLoader.type,
-        onSuccess: loadWishListItems.type,
-        onFailure: updateWishListError.type,
-      })
-    );
+    dispatch(thunkGetAllProducts);
+    dispatch(thunkGetAllCartItems);
+    dispatch(thunkGetAllWishListItems);
   }, []);
 
   const cartItems = useSelector((state) => state.cartItems.list);

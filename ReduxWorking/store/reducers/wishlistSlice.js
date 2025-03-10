@@ -40,14 +40,12 @@ const slice = createSlice({
 });
 
 export const getAllWishListState = (wishList, products) => {
-  return wishList
-    .map(({ productId }) => {
-      const wishListProduct = products.find(
-        (product) => product.id === productId
-      );
-      return wishListProduct;
-    })
-    .filter(({ title }) => title);
+  return wishList.map(({ productId }) => {
+    const wishListProduct = products.find(
+      (product) => product.id === productId
+    );
+    return wishListProduct;
+  });
 };
 // Memoizing selectorGetAllCartItemsState here with the help of createSelector
 export const selectorGetAllWishListState = createSelector(
@@ -58,11 +56,20 @@ export const selectorGetAllWishListState = createSelector(
 export const selectorGetIsLoadingState = (state) => state.wishList.loading;
 export const selectorGetIsErrorState = (state) => state.wishList.error;
 
-export const {
-  wishListAddItem,
-  wishListRemoveItem,
-  loadWishListItems,
-  updateWishListError,
-  updateWishListLoader,
-} = slice.actions;
+const { loadWishListItems, updateWishListLoader, updateWishListError } =
+  slice.actions;
+
+export const thunkGetAllWishListItems = (dispatch) => {
+  dispatch(updateWishListLoader());
+  fetch(`https://fakestoreapi.com/carts/5`)
+    .then((res) => res.json())
+    .then((wishList) => {
+      dispatch(loadWishListItems(wishList));
+    })
+    .catch(() => {
+      dispatch(updateWishListError());
+    });
+};
+
+export const { wishListAddItem, wishListRemoveItem } = slice.actions;
 export const wishListReducer = slice.reducer;

@@ -7,16 +7,6 @@ export default function Product({ productId, title, rating, price, imageUrl }) {
   const dispatch = useDispatch();
   return (
     <div className="product">
-      <div>
-        <button
-          onClick={() => {
-            dispatch(wishListAddItem({ productId }));
-          }}
-          className="wish-button"
-        >
-          <img className="wish-list-icon" src={wishListIcon} alt="wish-icon" />
-        </button>
-      </div>
       <div className="product-image">
         <img src={imageUrl} alt={title} />
       </div>
@@ -37,7 +27,13 @@ export default function Product({ productId, title, rating, price, imageUrl }) {
         >
           Add to Cart
         </button>
-        <button>Buy Now</button>
+        <button
+          onClick={() => {
+            dispatch(wishListAddItem({ productId }));
+          }}
+        >
+          Add To Wishlist
+        </button>
       </div>
     </div>
   );

@@ -26,7 +26,7 @@ export default function Home() {
           key={id}
           productId={id}
           title={title}
-          rating={rating}
+          rating={rating.rate}
           price={price}
           imageUrl={image}
         />

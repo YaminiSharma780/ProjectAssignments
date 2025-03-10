@@ -70,13 +70,24 @@ export const selectorGetAllCartItemsState = createSelector(
 export const selectorGetIsLoadingState = (state) => state.cartItems.loading;
 export const selectorGetIsErrorState = (state) => state.cartItems.error;
 
+const { loadCartItems, updateCartLoader, updateCartError } = slice.actions;
+
+export const thunkGetAllCartItems = (dispatch) => {
+  dispatch(updateCartLoader());
+  fetch(`https://fakestoreapi.com/carts/5`)
+    .then((res) => res.json())
+    .then((cartItems) => {
+      dispatch(loadCartItems(cartItems));
+    })
+    .catch(() => {
+      dispatch(updateCartError());
+    });
+};
+
 export const {
-  loadCartItems,
   cartAddItem,
   cartRemoveItem,
   cartIncreaseQuantity,
   cartDecreaseQuantity,
-  updateCartLoader,
-  updateCartError,
 } = slice.actions;
 export const cartReducer = slice.reducer;
