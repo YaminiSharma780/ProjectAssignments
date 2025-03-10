@@ -17,5 +17,5 @@ export const store = configureStore({
 
   // we have thunk inside redux toolkit called as thunk middleware
   // middleware: (getDefaultMiddleware) => [...getDefaultMiddleware(), apiMiddleware],
-  middleware: (getDefaultMiddleware) => [...getDefaultMiddleware(), thunkFun],
+  // middleware: (getDefaultMiddleware) => [...getDefaultMiddleware(), thunkFun],
 });
