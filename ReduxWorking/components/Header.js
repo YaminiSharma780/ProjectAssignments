@@ -18,40 +18,38 @@ import {
   updateWishListLoader,
   updateWishListError,
 } from "../store/reducers/wishlistSlice";
+import { fetchData } from "../store/middleware/apiMiddleware";
 
 export default function Header() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch({
-      type: "api/makeCall",
-      payload: {
+    dispatch(
+      fetchData({
         url: "products",
         onStart: updateLoader.type,
         onSuccess: updateAllProducts.type,
         onFailure: updateError.type,
-      },
-    });
+      })
+    );
 
-    dispatch({
-      type: "api/makeCall",
-      payload: {
+    dispatch(
+      fetchData({
         url: "carts/5",
         onStart: updateCartLoader.type,
         onSuccess: loadCartItems.type,
         onFailure: updateCartError.type,
-      },
-    });
+      })
+    );
 
-    dispatch({
-      type: "api/makeCall",
-      payload: {
+    dispatch(
+      fetchData({
         url: "carts/5",
         onStart: updateWishListLoader.type,
         onSuccess: loadWishListItems.type,
         onFailure: updateWishListError.type,
-      },
-    });
+      })
+    );
   }, []);
 
   const cartItems = useSelector((state) => state.cartItems.list);

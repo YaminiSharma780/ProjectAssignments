@@ -26,3 +26,5 @@ export const apiMiddleware =
       next(action);
     }
   };
+
+export const fetchData = (payload) => ({ type: "api/makeCall", payload });
