@@ -4,23 +4,19 @@ import "../App.css";
 import { useSelector } from "react-redux";
 import Loader from "./Loader";
 import Error from "./Error";
+import {
+  selectorGetAllCartItemsState,
+  selectorGetIsErrorState,
+  selectorGetIsLoadingState,
+} from "../store/reducers/cartSlice";
 
 export default function Cart() {
-  const cartItems = useSelector(({ products, cartItems }) => {
-    return cartItems.list
-      .map(({ productId, quantity }) => {
-        const cartProduct = products.list.find(
-          (product) => product.id === productId
-        );
-        return { ...cartProduct, quantity };
-      })
-      .filter(({ title }) => title);
-  });
-  console.log(cartItems);
+  const cartItems = useSelector(selectorGetAllCartItemsState);
+  // console.log(cartItems);
 
-  const isLoading = useSelector((state) => state.cartItems.loading);
-  const isError = useSelector((state) => state.cartItems.error);
-  console.log(isLoading, isError);
+  const isLoading = useSelector(selectorGetIsLoadingState);
+  const isError = useSelector(selectorGetIsErrorState);
+  // console.log(isLoading, isError);
 
   return isLoading === true ? (
     <Loader />

@@ -4,24 +4,20 @@ import WishListItem from "../components/WishListItem";
 import { useSelector } from "react-redux";
 import Loader from "./Loader";
 import Error from "./Error";
+import {
+  selectorGetAllWishListState,
+  selectorGetIsErrorState,
+  selectorGetIsLoadingState,
+} from "../store/reducers/wishlistSlice";
 
 export default function WishList() {
   // const wishListItems = useSelector((state) => state.wishList);
-  const wishListItems = useSelector(({ products, wishList }) => {
-    return wishList.list
-      .map(({ productId, quantity }) => {
-        const wishListProduct = products.list.find(
-          (product) => product.id === productId
-        );
-        return wishListProduct;
-      })
-      .filter(({ title }) => title);
-  });
-  console.log(wishListItems);
+  const wishListItems = useSelector(selectorGetAllWishListState);
+  // console.log(wishListItems);
 
-  const isLoading = useSelector((state) => state.wishList.loading);
-  const isError = useSelector((state) => state.wishList.error);
-  console.log(isLoading, isError);
+  const isLoading = useSelector(selectorGetIsLoadingState);
+  const isError = useSelector(selectorGetIsErrorState);
+  // console.log(isLoading, isError);
 
   return isLoading === true ? (
     <Loader />

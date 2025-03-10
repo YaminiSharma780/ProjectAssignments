@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSelector, createSlice } from "@reduxjs/toolkit";
 
 // Slice Reducer from Redux Toolkit
 // createSlice() will create Action Creator, Action Type, Reducer together in one go
@@ -38,8 +38,26 @@ const slice = createSlice({
     },
   },
 });
-// console.dir(slice.reducer);
-// console.dir(slice.actions);
+
+export const getAllWishListState = (wishList, products) => {
+  return wishList
+    .map(({ productId }) => {
+      const wishListProduct = products.find(
+        (product) => product.id === productId
+      );
+      return wishListProduct;
+    })
+    .filter(({ title }) => title);
+};
+// Memoizing selectorGetAllCartItemsState here with the help of createSelector
+export const selectorGetAllWishListState = createSelector(
+  (state) => state.wishList.list || [],
+  (state) => state.products.list || [],
+  getAllWishListState
+);
+export const selectorGetIsLoadingState = (state) => state.wishList.loading;
+export const selectorGetIsErrorState = (state) => state.wishList.error;
+
 export const {
   wishListAddItem,
   wishListRemoveItem,

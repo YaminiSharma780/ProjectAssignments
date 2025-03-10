@@ -22,7 +22,8 @@ const slice = createSlice({
     },
   },
 });
-// console.dir(slice.reducer);
-// console.dir(slice.actions);
+export const selectorGetAllProductsState = (state) => state.products.list;
+export const selectorGetIsLoadingState = (state) => state.products.loading;
+export const selectorGetIsErrorState = (state) => state.products.error;
 export const { updateAllProducts, updateLoader, updateError } = slice.actions;
 export const productsReducer = slice.reducer;
