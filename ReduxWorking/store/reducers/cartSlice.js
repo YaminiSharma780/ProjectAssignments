@@ -1,4 +1,8 @@
-import { createSelector, createSlice } from "@reduxjs/toolkit";
+import {
+  createAsyncThunk,
+  createSelector,
+  createSlice,
+} from "@reduxjs/toolkit";
 
 // Slice Reducer from Redux Toolkit
 // createSlice() will create Action Creator, Action Type, Reducer together in one go
@@ -6,6 +10,19 @@ const searchElement = (state, action) =>
   state.findIndex(
     (cartItem) => cartItem.productId === action.payload.productId
   );
+
+export const asyncThunkGetAllCartItems = createAsyncThunk(
+  "cart/loadCartItems",
+  async () => {
+    try {
+      const response = await fetch("https://fakestoreapi.com/carts/5");
+      return response.json();
+    } catch (err) {
+      throw err;
+    }
+  }
+);
+
 const slice = createSlice({
   name: "cartItems",
   initialState: {
@@ -14,18 +31,6 @@ const slice = createSlice({
     error: "",
   },
   reducers: {
-    updateCartLoader(state) {
-      state.loading = true;
-    },
-    updateCartError(state, action) {
-      state.loading = false;
-      state.error = action.payload || "Something went wrong..";
-    },
-    loadCartItems(state, action) {
-      state.loading = false;
-      state.error = "";
-      state.list = action.payload.products;
-    },
     cartAddItem(state, action) {
       const foundElementIndex = searchElement(state.list, action);
       if (foundElementIndex !== -1) {
@@ -50,40 +55,41 @@ const slice = createSlice({
       }
     },
   },
+  extraReducers: (builder) => {
+    builder
+      .addCase(asyncThunkGetAllCartItems.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(asyncThunkGetAllCartItems.fulfilled, (state, action) => {
+        console.log("payload : ", action.payload.products);
+        state.loading = false;
+        state.list = action.payload.products || [];
+      })
+      .addCase(asyncThunkGetAllCartItems.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload || "Something went wrong..";
+      });
+  },
 });
 
-export const getAllCartItemsState = (cartItems, products) => {
-  return cartItems
+export const getAllCartItemsState = ({ products, cartItems }) => {
+  return cartItems.list
     .map(({ productId, quantity }) => {
-      const cartProduct = products.find((product) => product.id === productId);
+      const cartProduct = products.list.find(
+        (product) => product.id === productId
+      );
       return { ...cartProduct, quantity };
     })
     .filter(({ title }) => title);
 };
+
 // Memoizing selectorGetAllCartItemsState here with the help of createSelector
 export const selectorGetAllCartItemsState = createSelector(
-  (state) => state.cartItems.list || [],
-  (state) => state.products.list || [],
-  getAllCartItemsState
+  getAllCartItemsState,
+  (cartItems) => cartItems
 );
-
 export const selectorGetIsLoadingState = (state) => state.cartItems.loading;
 export const selectorGetIsErrorState = (state) => state.cartItems.error;
-
-const { loadCartItems, updateCartLoader, updateCartError } = slice.actions;
-
-export const thunkGetAllCartItems = (dispatch) => {
-  dispatch(updateCartLoader());
-  fetch(`https://fakestoreapi.com/carts/5`)
-    .then((res) => res.json())
-    .then((cartItems) => {
-      dispatch(loadCartItems(cartItems));
-    })
-    .catch(() => {
-      dispatch(updateCartError());
-    });
-};
-
 export const {
   cartAddItem,
   cartRemoveItem,

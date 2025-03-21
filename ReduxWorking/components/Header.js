@@ -4,16 +4,15 @@ import cartIcon from "../assets/cart-icon.svg";
 import wishListIcon from "../assets/wish-list-icon.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { thunkGetAllProducts } from "../store/reducers/productsSlice";
-import { thunkGetAllCartItems } from "../store/reducers/cartSlice";
 import { thunkGetAllWishListItems } from "../store/reducers/wishlistSlice";
-import { fetchData } from "../store/middleware/apiMiddleware";
+import { asyncThunkGetAllCartItems } from "../store/reducers/cartSlice";
 
 export default function Header() {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(thunkGetAllProducts);
-    dispatch(thunkGetAllCartItems);
+    dispatch(asyncThunkGetAllCartItems());
     dispatch(thunkGetAllWishListItems);
   }, []);
 
