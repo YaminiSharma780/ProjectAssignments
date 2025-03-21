@@ -7,7 +7,7 @@ import Home from "./Home";
 
 const App = () => (
   <>
-    <Header />
+    <Header app={{ name: "mdfdapp1" }} />
     <Home />
     <Footer />
   </>
