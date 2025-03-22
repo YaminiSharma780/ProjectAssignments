@@ -8,10 +8,8 @@ body {
 }
 
 .home {
-    height: 80vh;
-}
-
-.home-content {
+    margin: 10px;
+    border: 1px solid black;
 }
 
 .header {
