@@ -2,6 +2,7 @@ import classNames from "classnames";
 import lodash from "lodash";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import useDebounce from "./useDebounce";
 
 const DEBOUNCE_DELAY = 500;
 
@@ -9,6 +10,7 @@ export default function Search() {
   const [data, setData] = useState([]);
   const [textValue, setTextValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const debouncedTextValue = useDebounce(textValue, DEBOUNCE_DELAY);
 
   const fetchData = (text) => {
     if (text === "") return;
@@ -30,15 +32,13 @@ export default function Search() {
       });
   };
 
-  const debouncedFetchData = lodash.debounce(fetchData, DEBOUNCE_DELAY);
-
   useEffect(() => {
-    if (textValue !== "") {
-      debouncedFetchData(textValue);
+    if (debouncedTextValue) {
+      fetchData(debouncedTextValue);
     } else {
       setData([]);
     }
-  }, [textValue]);
+  }, [debouncedTextValue]);
 
   const handleInputChange = (e) => {
     setTextValue(e.target.value);
