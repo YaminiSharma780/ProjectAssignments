@@ -4,7 +4,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import useDebounce from "./useDebounce";
 
-const DEBOUNCE_DELAY = 500;
+const DEBOUNCE_DELAY = 1000;
 
 export default function Search() {
   const [data, setData] = useState([]);
@@ -22,6 +22,7 @@ export default function Search() {
       .then((res) => {
         const countryList = res.data.map((country) => country.name.common);
         setData(countryList);
+        console.log(countryList);
         setIsLoading(false);
       })
       .catch(() => {
@@ -63,7 +64,11 @@ export default function Search() {
       {textValue && !isLoading && data.length > 0 && (
         <div className={classNames("list", "is-hoverable")}>
           {data.map((country, index) => (
-            <div key={index} className="list-item">
+            <div
+              key={index}
+              onClick={(e) => setTextValue(country)}
+              className="list-item"
+            >
               {country}
             </div>
           ))}
