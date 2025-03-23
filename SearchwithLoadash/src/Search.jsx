@@ -3,31 +3,45 @@ import lodash from "lodash";
 import axios from "axios";
 import { useState, useEffect } from "react";
 
-const ITEMS_API_URL = "https://restcountries.com/v3.1/all";
 const DEBOUNCE_DELAY = 500;
 
 export default function Search() {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
+  const [textValue, setTextValue] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const fetchData = (text) => {
+    if (text === "") return;
+
+    setIsLoading(true);
+
+    axios
+      .get(`https://restcountries.com/v3.1/name/${text}`)
+      .then((res) => {
+        const countryList = res.data.map((country) => country.name.common);
+        setData(countryList);
+        setIsLoading(false);
+      })
+      .catch(() => {
+        setData([]);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+
+  const debouncedFetchData = lodash.debounce(fetchData, DEBOUNCE_DELAY);
 
   useEffect(() => {
-    axios.get(ITEMS_API_URL).then((res) => {
-      const countryList = res.data.map((country) => country.name.common);
-      console.log(countryList);
-      setData(countryList);
-    });
-  }, []);
-
-  const [textValue, setTextValue] = useState("");
+    if (textValue !== "") {
+      debouncedFetchData(textValue);
+    } else {
+      setData([]);
+    }
+  }, [textValue]);
 
   const handleInputChange = (e) => {
     setTextValue(e.target.value);
-  };
-
-  const filteredCountries = () => {
-    if (!data) return [];
-    return data.filter((country) =>
-      country.toLowerCase().includes(textValue.toLowerCase())
-    );
   };
 
   return (
@@ -38,18 +52,23 @@ export default function Search() {
           value={textValue}
           type="text"
           className="input"
+          placeholder="Search for countries"
         />
       </div>
 
-      {textValue && filteredCountries().length > 0 && (
+      {isLoading && <div>Loading...</div>}
+
+      {textValue && !isLoading && data.length > 0 && (
         <div className="list is-hoverable">
-          {filteredCountries().map((country, index) => {
-            return <div key={index}>{country}</div>;
-          })}
+          {data.map((country, index) => (
+            <div key={index} className="list-item">
+              {country}
+            </div>
+          ))}
         </div>
       )}
 
-      {textValue && filteredCountries().length === 0 && (
+      {textValue && !isLoading && data.length === 0 && (
         <div>No countries found</div>
       )}
     </div>
