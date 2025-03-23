@@ -11,12 +11,19 @@ const Home = () => {
 
   return (
     <div className="home">
-      <div className="my-10 grid grid-cols-4 gap-5">
+      <div className="my-10 grid gap-5 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
         {products.map((product) => (
-          <div key={product.id} className="border-1 border-solid border-black">
-            <img src={product.image} alt={product.name} />
+          <div
+            key={product.id}
+            className=" flex flex-col justify-between border-1 border-solid border-black"
+          >
+            <img
+              className="object-cover"
+              src={product.image}
+              alt={product.name}
+            />
             <div className="flex justify-between items-center mt-2">
-              <span>{product.name}</span>
+              <span className="font-bold">{product.name}</span>
               <span>{currency.format(product.price)}</span>
             </div>
           </div>

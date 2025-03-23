@@ -3,13 +3,15 @@ import "./index.css";
 import Header from "mdfdapp1/Header";
 import Footer from "mdfdapp1/Footer";
 import ErrorBoundary from "./ErrorBoundary";
+import HomeContent from "./HomeContent";
 
 const App = () => {
   return (
     <main>
       <ErrorBoundary>
-        <Header app={{ name: "mdfdapp2" }}/>
+        <Header app={{ name: "mdfdapp2" }} />
       </ErrorBoundary>
+      <HomeContent />
       <Footer />
     </main>
   );
