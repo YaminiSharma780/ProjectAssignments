@@ -1,0 +1,24 @@
+#root {
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  color: white;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+}
+
+.wrapper {}
+
+.list {}
+
+.is-hoverable {}
+
+.control {}
+
+.input {}
