@@ -56,10 +56,12 @@ export default function Search() {
         />
       </div>
 
-      {isLoading && <div>Loading...</div>}
+      {isLoading && (
+        <div className={classNames({ loading: isLoading })}>Loading...</div>
+      )}
 
       {textValue && !isLoading && data.length > 0 && (
-        <div className="list is-hoverable">
+        <div className={classNames("list", "is-hoverable")}>
           {data.map((country, index) => (
             <div key={index} className="list-item">
               {country}
