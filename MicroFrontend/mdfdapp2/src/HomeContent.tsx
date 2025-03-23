@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 import { getProductsById, currency } from "mdfdapp1/products";
 
@@ -12,7 +13,7 @@ interface Product {
 }
 
 const HomeContent = () => {
-  const id = 1;
+  const { id } = useParams();
   const [product, setProduct] = useState<Product | null>(null);
 
   useEffect(() => {
@@ -42,9 +43,7 @@ const HomeContent = () => {
           </div>
           <div className="flex flex-col justify-center gap-2.5">
             <p className="font-bold flex-grow">{product.description}</p>
-            <div className="flex-end">
-              {product.longDescription}
-            </div>
+            <div className="flex-end">{product.longDescription}</div>
           </div>
         </div>
       </div>
